@@ -56,6 +56,8 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.setAlwaysOnTop(true, 'floating');
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
