@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import './synthwave.css';
+
+
+html {
+  touch-action: none;
+}
+
+html, body, #root {
+  height: 100%;
+}
