@@ -1,8 +1,9 @@
-import { app, shell, BrowserWindow, ipcMain, clipboard } from 'electron'
-import { join } from 'path'
+import { app, shell, BrowserWindow, ipcMain, clipboard, Tray, Menu } from 'electron'
+import path, { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { clipboardDB, ClipboardItem } from './database'
+
 
 // Maximum number of items to keep in clipboard history
 const MAX_HISTORY_SIZE = 50
@@ -45,7 +46,8 @@ function createWindow(): void {
     width: 300,
     height: 670,
     show: false,
-    titleBarStyle: 'hidden',
+    frame: false,
+    // titleBarStyle: 'hidden',
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -67,6 +69,7 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -74,6 +77,33 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
+  mainWindow.on('blur', () => {
+    mainWindow.hide();
+  });
+
+  const tray = new Tray(icon); // icon name ends with 'template' for dark mode support
+
+  tray.setToolTip('Tacotac');
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Quit', click: () => app.quit() }
+  ]);
+
+  tray.on('click', () => {
+    if(mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+      mainWindow.focus();
+    }
+  });
+
+  tray.on('right-click', () => {
+    tray.popUpContextMenu(contextMenu);
+  });
 }
 
 // This method will be called when Electron has finished
@@ -82,6 +112,8 @@ function createWindow(): void {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
+
+
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
