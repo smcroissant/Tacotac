@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project (if applicable)
-        run: npm run build
-
       - name: Build and publish Electron app (macOS)
         run: npx electron-builder --mac --publish always
         env:
