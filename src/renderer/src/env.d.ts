@@ -20,3 +20,9 @@ declare global {
     api: ClipboardAPI
   }
 }
+
+declare module 'react' {
+  interface CSSProperties {
+    '-webkit-app-region'?: string;
+  }
+}
