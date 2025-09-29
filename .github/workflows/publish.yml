@@ -20,8 +20,8 @@ jobs:
 
       - name: Set up git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "smcroissant"
+          git config user.email "samuel.s.mamane@gmail.com"
 
       - name: Create and push tag
         env:
