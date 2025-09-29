@@ -26,7 +26,7 @@ jobs:
       - name: Create and push tag
         env:
           VERSION: ${{ env.VERSION }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
         run: |
           TAG="v$VERSION"
           git tag $TAG
