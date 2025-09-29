@@ -20,16 +20,13 @@ jobs:
 
       - name: Set up git
         run: |
-          git config user.name "smcroissant"
-          git config user.email "samuel.s.mamane@gmail.com"
-        env:
-          VERSION: ${{ env.VERSION }}
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Create and push tag
         env:
           VERSION: ${{ env.VERSION }}
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
         run: |
           TAG="v$VERSION"
           git tag $TAG
