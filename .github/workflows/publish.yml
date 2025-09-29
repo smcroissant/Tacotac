@@ -32,7 +32,7 @@ jobs:
           git tag $TAG
           git push origin $TAG
 
-jobs:
+build-and-publish:
   needs: auto-tag
   build-macos:
     runs-on: macos-latest
