@@ -28,9 +28,7 @@ jobs:
           architecture: x64
 
       - name: Install Python setuptools
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install setuptools
+        run: python3 -m pip install --user setuptools
 
       - name: Install dependencies
         run: |
