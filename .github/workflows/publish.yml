@@ -41,9 +41,9 @@ on:
   push:
     tags:
       - 'v*'
+
 jobs:
   build-and-publish:
-    needs: auto-tag
     runs-on: macos-latest
 
     steps:
