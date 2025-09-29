@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   main: {
     build: {
-      outDir: 'out/main'
+      outDir: 'out/main',
     },
     plugins: [externalizeDepsPlugin()]
   },
