@@ -1,5 +1,10 @@
 name: Build and Publish macOS Electron App
 
+permissions:
+  contents: write
+  actions: read
+
+
 on:
   push:
     branches:
