@@ -26,7 +26,7 @@ Managing multiple clipboard items can be challenging when working with various p
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/tacotac.git
+git clone https://github.com/smcroissant/tacotac.git
 
 # Navigate to the project directory
 cd tacotac

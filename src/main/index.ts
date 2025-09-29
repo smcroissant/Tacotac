@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, clipboard, Tray, Menu } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, clipboard, Tray, Menu, screen } from 'electron'
 import path, { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -92,12 +92,16 @@ function createWindow(): void {
     { label: 'Quit', click: () => app.quit() }
   ]);
 
+
   tray.on('click', () => {
     if(mainWindow.isVisible()) {
       mainWindow.hide();
     } else {
+      // Get mouse position
+
       mainWindow.show();
       mainWindow.focus();
+
     }
   });
 
