@@ -22,6 +22,9 @@ jobs:
         run: |
           git config user.name "smcroissant"
           git config user.email "samuel.s.mamane@gmail.com"
+        env:
+          VERSION: ${{ env.VERSION }}
+          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
 
       - name: Create and push tag
         env:
