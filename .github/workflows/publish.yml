@@ -1,14 +1,13 @@
-name: Tags
+name: Build and Publish macOS Electron App
 
 permissions:
   contents: write
   actions: read
 
-
 on:
   push:
     branches:
-      - main          # Trigger on version tags like v1.0.0
+      - main
 
 jobs:
   auto-tag:
@@ -36,3 +35,26 @@ jobs:
           TAG="v$VERSION"
           git tag $TAG
           git push origin $TAG
+
+  build-and-publish:
+    needs: auto-tag
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and publish Electron app (macOS)
+        run: npm run build:mac -- --publish=always
+        env:
+          GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
