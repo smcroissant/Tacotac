@@ -27,4 +27,4 @@ jobs:
       - name: Build and publish Electron app (macOS)
         run: npx electron-builder --mac --publish always
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.SECRET_GITHUB_TOKEN }}
