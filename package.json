@@ -40,7 +40,6 @@
     "clsx": "^2.1.1",
     "electron-updater": "^6.3.9",
     "lucide-react": "^0.544.0",
-    "next-themes": "^0.4.6",
     "rxdb": "^16.19.0",
     "rxjs": "^7.8.2",
     "sqlite3": "^5.1.7",
