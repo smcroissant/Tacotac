@@ -1,4 +1,4 @@
-name: Build and Publish macOS Electron App
+name: Tags
 
 permissions:
   contents: write
@@ -36,29 +36,3 @@ jobs:
           TAG="v$VERSION"
           git tag $TAG
           git push origin $TAG
-
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  build-and-publish:
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build and publish Electron app (macOS)
-        run: npm run build:mac --publish=always
-        env:
-          GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
