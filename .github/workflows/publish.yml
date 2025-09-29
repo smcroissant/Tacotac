@@ -1,49 +1,62 @@
-name: Publish
+name: Build and Publish Electron App
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  publish:
-    # To enable auto publishing to github, update your electron publisher
-    # config in package.json > "build" and remove the conditional below
-    if: ${{ github.repository_owner == 'smcroissant' }}
-
-    runs-on: ${{ matrix.os }}
-
+  build:
+    name: Build desktop app for macOS Intel and Apple Silicon
     strategy:
       matrix:
-        os: [macos-latest]
+        platform: [macos-13, macos-13-xlarge] # macos-13 runs on Intel, macos-13-xlarge on ARM (Apple Silicon)
+    runs-on: ${{ matrix.platform }}
 
     steps:
-      - name: Checkout git repo
-        uses: actions/checkout@v1
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Install Node and NPM
-        uses: actions/setup-node@v4
+      - name: Set up Python (for node-gyp dependency)
+        uses: actions/setup-python@v4
         with:
-          node-version: 15
-          architecture: x64
+          python-version: '3.11'
 
-      - name: Install Python setuptools
-        run: python3 -m pip install --user setuptools
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.9.0'
+
+      - name: Install Apple code signing certificate
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.APPLE_SIGNING_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
 
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm ci
 
-      - name: Publish releases
+      - name: Build and publish Electron app
         env:
-          # These values are used for auto updates signing
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
-          CSC_LINK: ${{ secrets.CSC_LINK }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          # This is used for uploading release assets to github
-          GITHUB_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
-        run: |
-          npm run postinstall
-          npm run build
-          npm exec electron-builder -- --publish always --win --mac --linux
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          NODE_ENV: production
+        run: npm run build:mac && npm run publish
+
+      - name: Clean up keychain
+        if: ${{ always() }}
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
