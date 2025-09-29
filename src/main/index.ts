@@ -3,6 +3,7 @@ import path, { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { clipboardDB, ClipboardItem } from './database'
+const { autoUpdater } = require('electron-updater');
 
 
 // Maximum number of items to keep in clipboard history
@@ -170,6 +171,17 @@ app.on('window-all-closed', () => {
   }
 })
 
+autoUpdater.on('update-available', () => {
+  console.log('Update available');
+});
+autoUpdater.on('update-downloaded', () => {
+  console.log('Update downloaded');
+  autoUpdater.quitAndInstall();
+});
+
+app.on('ready', () => {
+  autoUpdater.checkForUpdatesAndNotify();
+});
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
