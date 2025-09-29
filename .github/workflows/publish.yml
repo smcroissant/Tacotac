@@ -32,24 +32,24 @@ jobs:
           git tag $TAG
           git push origin $TAG
 
-build-and-publish:
-  needs: auto-tag
-  build-macos:
-    runs-on: macos-latest
+  build-and-publish:
+    needs: auto-tag
+    build-macos:
+      runs-on: macos-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+        - name: Install dependencies
+          run: npm install
 
-      - name: Build and publish Electron app (macOS)
-        run: npm run build:mac --publish=always
-        env:
-          GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
+        - name: Build and publish Electron app (macOS)
+          run: npm run build:mac --publish=always
+          env:
+            GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
