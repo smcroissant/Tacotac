@@ -2,7 +2,7 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, clipboard, ipcMain, Menu, nativeImage, screen, shell, Tray } from 'electron'
 import path, { join } from 'path'
 import icon from '../../resources/presse-papiers.png?asset'
-import { ClipboardItem, clipboardDB } from './database'
+import { type ClipboardItem, clipboardDB } from './database'
 
 
 const { autoUpdater } = require('electron-updater');
@@ -102,35 +102,7 @@ function createWindow(): void {
     if(mainWindow.isVisible()) {
       mainWindow.hide();
     } else {
-      // Get mouse position
-
-      const cursorPoint = screen.getCursorScreenPoint();
-const display = screen.getDisplayNearestPoint(cursorPoint);
-const { x, y, width, height } = display.bounds;
-const winBounds = mainWindow.getBounds();
-
-// Set an offset so the window doesn't cover the cursor
-const offsetX = 20;
-const offsetY = 20;
-
-// Calculate new window position near the cursor
-let newX = cursorPoint.x + offsetX;
-let newY = cursorPoint.y + offsetY;
-
-// Ensure the window doesn't go off-screen on the right or bottom edge
-if (newX + winBounds.width > x + width) {
-  newX = x + width - winBounds.width;
-}
-if (newY + winBounds.height > y + height) {
-  newY = y + height - winBounds.height;
-}
-
-// Optionally ensure the window doesn't go off-screen on the left or top edge
-if (newX < x) newX = x;
-if (newY < y) newY = y;
-
-
-      mainWindow.setPosition(newX, 25);
+      mainWindow.setPosition(25, 25);
       mainWindow.show();
       mainWindow.focus();
 
