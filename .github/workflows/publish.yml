@@ -39,13 +39,6 @@ jobs:
   build-and-publish:
     needs: auto-tag
     runs-on: macos-latest
-    env:
-      CSC_LINK: ${{ secrets.APPLE_SIGNING_CERTIFICATE_BASE64 }}
-      CSC_KEY_PASSWORD: ${{ secrets.APPLE_SIGNING_CERTIFICATE_PASSWORD }}
-      APPLE_API_KEY: ${{ secrets.APPLE_API_KEY_BASE64 }}
-      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-      APPLE_API_ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -61,26 +54,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Decode and import Apple certificate to keychain
-        run: |
-          echo "$CSC_LINK" | base64 --decode > mac_certs.p12
-          security create-keychain -p "" build.keychain
-          security import mac_certs.p12 -k ~/Library/Keychains/build.keychain -P "$CSC_KEY_PASSWORD" -T /usr/bin/codesign
-          security list-keychains -s ~/Library/Keychains/build.keychain
-          security default-keychain -s ~/Library/Keychains/build.keychain
-          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
-
-      - name: Decode Apple API key for notarization
-        run: echo "$APPLE_API_KEY" | base64 --decode > AuthKey.p8
-
-      - name: Build and publish Electron app (macOS) with notarization using token
-        run: |
-          # Configure environment variables for electron-builder
-          export CSC_IDENTITY_AUTO_DISCOVERY=true
-          export CSC_KEYCHAIN=~/Library/Keychains/build.keychain
-          export NOTARIZE_APPLE_API_KEY_PATH=$(pwd)/AuthKey.p8
-          export NOTARIZE_APPLE_API_KEY_ID=$APPLE_API_KEY_ID
-          export NOTARIZE_APPLE_API_ISSUER_ID=$APPLE_API_ISSUER_ID
-
-          npm run build:mac -- --publish=always
+      - name: Build and publish Electron app (macOS)
+        run: npm run build:mac -- --publish=always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
