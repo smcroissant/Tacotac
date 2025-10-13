@@ -101,6 +101,8 @@ export function ClipboardManager() {
 										>
 											<div className="flex justify-between  gap-4">
 												<div className="flex-1 min-w-0">
+													{/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
+													{/** biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 													<div
 														className="text-sm font-mono text-foreground break-all leading-relaxed"
 														onClick={() => copyToClipboard(item.text)}
@@ -112,6 +114,8 @@ export function ClipboardManager() {
 												</div>
 
 												<div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity py-2">
+													{/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
+													{/** biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
 													<div
 														onClick={() => deleteItem(item?.id || 0)}
 														className="text-primary border-primary hover:text-background hover:glow-magenta font-mono"
