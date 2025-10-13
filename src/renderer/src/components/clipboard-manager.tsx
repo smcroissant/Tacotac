@@ -83,7 +83,10 @@ export function ClipboardManager() {
 					</div>
 					<ScrollArea className="flex-1 overflow-auto px-2">
 						<div className="w-full">
-							<div className="space-y-2">
+							<div
+								className="space-y-2"
+								style={{ "-webkit-app-region": "no-drag" }}
+							>
 								{filteredItems.length === 0 ? (
 									<div className="text-center py-8">
 										<div className="text-muted-foreground font-mono text-sm tracking-wide">
@@ -94,7 +97,6 @@ export function ClipboardManager() {
 									filteredItems.map((item) => (
 										<div
 											key={item.id}
-											style={{ "-webkit-app-region": "no-drag" }}
 											className="group bg-secondary/80 border border-accent/30 rounded px-2 py-1 hover:border-accent hover:glow-cyan transition-all duration-300"
 										>
 											<div className="flex justify-between  gap-4">

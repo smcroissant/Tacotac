@@ -1,153 +1,165 @@
 :root {
-  /* Synthwave color palette with neon colors */
-  --background: #0a0a0f;
-  --foreground: #e0e0ff;
-  --card: #1a1a2e;
-  --card-foreground: #e0e0ff;
-  --popover: #1a1a2e;
-  --popover-foreground: #e0e0ff;
-  --primary: #ff0080;
-  --primary-foreground: #ffffff;
-  --secondary: #16213e;
-  --secondary-foreground: #00ffff;
-  --muted: #16213e;
-  --muted-foreground: #8892b0;
-  --accent: #00ffff;
-  --accent-foreground: #0a0a0f;
-  --destructive: #ff0080;
-  --destructive-foreground: #ffffff;
-  --border: #00ffff;
-  --input: #16213e;
-  --ring: #00ffff;
-  --chart-1: #ff0080;
-  --chart-2: #00ffff;
-  --chart-3: #8a2be2;
-  --chart-4: #ff6b35;
-  --chart-5: #00ff41;
-  --radius: 0.5rem;
-  --sidebar: #1a1a2e;
-  --sidebar-foreground: #e0e0ff;
-  --sidebar-primary: #ff0080;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #00ffff;
-  --sidebar-accent-foreground: #0a0a0f;
-  --sidebar-border: #00ffff;
-  --sidebar-ring: #00ffff;
+	/* Synthwave color palette with neon colors */
+	--background: #0a0a0f;
+	--foreground: #e0e0ff;
+	--card: #1a1a2e;
+	--card-foreground: #e0e0ff;
+	--popover: #1a1a2e;
+	--popover-foreground: #e0e0ff;
+	--primary: #ff0080;
+	--primary-foreground: #ffffff;
+	--secondary: #16213e;
+	--secondary-foreground: #00ffff;
+	--muted: #16213e;
+	--muted-foreground: #8892b0;
+	--accent: #00ffff;
+	--accent-foreground: #0a0a0f;
+	--destructive: #ff0080;
+	--destructive-foreground: #ffffff;
+	--border: #00ffff;
+	--input: #16213e;
+	--ring: #00ffff;
+	--chart-1: #ff0080;
+	--chart-2: #00ffff;
+	--chart-3: #8a2be2;
+	--chart-4: #ff6b35;
+	--chart-5: #00ff41;
+	--radius: 0.5rem;
+	--sidebar: #1a1a2e;
+	--sidebar-foreground: #e0e0ff;
+	--sidebar-primary: #ff0080;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #00ffff;
+	--sidebar-accent-foreground: #0a0a0f;
+	--sidebar-border: #00ffff;
+	--sidebar-ring: #00ffff;
 }
 
 .dark {
-  /* Dark mode uses same synthwave colors */
-  --background: #0a0a0f;
-  --foreground: #e0e0ff;
-  --card: #1a1a2e;
-  --card-foreground: #e0e0ff;
-  --popover: #1a1a2e;
-  --popover-foreground: #e0e0ff;
-  --primary: #ff0080;
-  --primary-foreground: #ffffff;
-  --secondary: #16213e;
-  --secondary-foreground: #00ffff;
-  --muted: #16213e;
-  --muted-foreground: #8892b0;
-  --accent: #00ffff;
-  --accent-foreground: #0a0a0f;
-  --destructive: #ff0080;
-  --destructive-foreground: #ffffff;
-  --border: #00ffff;
-  --input: #16213e;
-  --ring: #00ffff;
-  --chart-1: #ff0080;
-  --chart-2: #00ffff;
-  --chart-3: #8a2be2;
-  --chart-4: #ff6b35;
-  --chart-5: #00ff41;
-  --sidebar: #1a1a2e;
-  --sidebar-foreground: #e0e0ff;
-  --sidebar-primary: #ff0080;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #00ffff;
-  --sidebar-accent-foreground: #0a0a0f;
-  --sidebar-border: #00ffff;
-  --sidebar-ring: #00ffff;
+	/* Dark mode uses same synthwave colors */
+	--background: #0a0a0f;
+	--foreground: #e0e0ff;
+	--card: #1a1a2e;
+	--card-foreground: #e0e0ff;
+	--popover: #1a1a2e;
+	--popover-foreground: #e0e0ff;
+	--primary: #ff0080;
+	--primary-foreground: #ffffff;
+	--secondary: #16213e;
+	--secondary-foreground: #00ffff;
+	--muted: #16213e;
+	--muted-foreground: #8892b0;
+	--accent: #00ffff;
+	--accent-foreground: #0a0a0f;
+	--destructive: #ff0080;
+	--destructive-foreground: #ffffff;
+	--border: #00ffff;
+	--input: #16213e;
+	--ring: #00ffff;
+	--chart-1: #ff0080;
+	--chart-2: #00ffff;
+	--chart-3: #8a2be2;
+	--chart-4: #ff6b35;
+	--chart-5: #00ff41;
+	--sidebar: #1a1a2e;
+	--sidebar-foreground: #e0e0ff;
+	--sidebar-primary: #ff0080;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #00ffff;
+	--sidebar-accent-foreground: #0a0a0f;
+	--sidebar-border: #00ffff;
+	--sidebar-ring: #00ffff;
 }
 
 @theme inline {
-  /* Import retro monospace font */
-  --font-mono: "Courier New", monospace;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+	/* Import retro monospace font */
+	--font-mono: "Courier New", monospace;
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground font-mono  ;    /* Add synthwave background pattern */
-    height: 100vh;
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground font-mono; /* Add synthwave background pattern */
+		height: 100vh;
 
-    background-size: 20px 20px;
-  }
+		background-size: 20px 20px;
+	}
 }
 
 /* Add synthwave glow effects */
 @layer utilities {
-  .glow-cyan {
-    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff;
-  }
+	.glow-cyan {
+		box-shadow:
+			0 0 5px #00ffff,
+			0 0 10px #00ffff,
+			0 0 15px #00ffff;
+	}
 
-  .glow-magenta {
-    box-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080, 0 0 15px #ff0080;
-  }
+	.glow-magenta {
+		box-shadow:
+			0 0 5px #ff0080,
+			0 0 10px #ff0080,
+			0 0 15px #ff0080;
+	}
 
-  .text-glow-cyan {
-    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-  }
+	.text-glow-cyan {
+		text-shadow:
+			0 0 5px #00ffff,
+			0 0 10px #00ffff;
+	}
 
-  .text-glow-magenta {
-    text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080;
-  }
+	.text-glow-magenta {
+		text-shadow:
+			0 0 5px #ff0080,
+			0 0 10px #ff0080;
+	}
 
-  .border-glow {
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-  }
+	.border-glow {
+		box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+	}
 
-  .synthwave-card {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
+	.synthwave-card {
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+		box-shadow:
+			0 0 10px rgba(0, 255, 255, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
 }

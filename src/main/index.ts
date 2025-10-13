@@ -116,7 +116,7 @@ function createWindow(): void {
 			const { x, y, width, height } = display.bounds;
 			const winBounds = mainWindow.getBounds();
 			const newX = width - winBounds.width;
-			const newY = 0;
+			const newY = 25;
 			mainWindow.setPosition(newX, newY);
 			mainWindow.show();
 			mainWindow.focus();
