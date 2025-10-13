@@ -39,6 +39,13 @@ jobs:
   build-and-publish:
     needs: auto-tag
     runs-on: macos-latest
+    env:
+      CSC_LINK: ${{ secrets.mac_certs }}
+      CSC_KEY_PASSWORD: ${{ secrets.mac_certs_password }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -54,7 +61,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Decode and import Apple certificate to keychain
+        run: |
+          echo "$CSC_LINK" | base64 --decode > mac_certs.p12
+          security create-keychain -p "" build.keychain
+          security import mac_certs.p12 -k ~/Library/Keychains/build.keychain -P "$CSC_KEY_PASSWORD" -T /usr/bin/codesign
+          security list-keychains -s ~/Library/Keychains/build.keychain
+          security default-keychain -s ~/Library/Keychains/build.keychain
+          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+          
       - name: Build and publish Electron app (macOS)
         run: npm run build:mac -- --publish=always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
