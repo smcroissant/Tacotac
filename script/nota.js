@@ -1,26 +1,36 @@
 const { notarize } = require("@electron/notarize");
+const { build } = require("../package.json");
 
 exports.default = async function notarizing(context) {
-	const appName = context.packager.appInfo.productFilename;
 	const { electronPlatformName, appOutDir } = context;
 
 	if (electronPlatformName !== "darwin") {
-		console.log("• Skipping notarization (not macOS)");
+		console.log("Skipping notarization (not macOS)");
 		return;
 	}
 
-	const appId = "com.croissantlabs.tacotac"; // Must match appId in config
+	if (process.env.CI !== "true") {
+		console.warn("Skipping notarization (not in CI)");
+		return;
+	}
+
+	const appName = context.packager.appInfo.productFilename;
 	const appPath = `${appOutDir}/${appName}.app`;
-	const { APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID } = process.env;
 
-	console.log(`• Notarizing ${appPath}`);
+	console.log(`Starting notarization for ${appPath}`);
 
-	return await notarize({
-		tool: "notarytool",
-		appBundleId: appId,
-		appPath,
-		appleId: APPLE_ID,
-		appleIdPassword: APPLE_APP_SPECIFIC_PASSWORD,
-		teamId: APPLE_TEAM_ID,
-	});
+	try {
+		await notarize({
+			tool: "notarytool",
+			appBundleId: build.appId,
+			appPath: appPath,
+			teamId: process.env.APPLE_TEAM_ID,
+			appleId: process.env.APPLE_ID,
+			appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD,
+		});
+		console.log("✅ Notarization completed successfully");
+	} catch (error) {
+		console.error("❌ Notarization failed:", error);
+		throw error;
+	}
 };

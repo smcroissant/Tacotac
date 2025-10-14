@@ -54,12 +54,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Décode le certificat base64
+      - name: Prepare certificate
+        env:
+          CSC_CONTENT: ${{ secrets.MAC_CERTIFICATE }}
+        run: |
+          echo "$CSC_CONTENT" | base64 --decode > certificate.p12
+
       - name: Build and publish Electron app (macOS)
         run: npm run build:mac -- --publish=always
         env:
+          CI: true
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          CSC_LINK: ${{ secrets.MAC_CERTIFICATE }}
+          CSC_LINK: ./certificate.p12
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
