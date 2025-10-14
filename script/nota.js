@@ -1,19 +1,26 @@
-const { notarize } = require("electron-notarize");
+const { notarize } = require("@electron/notarize");
 
 exports.default = async function notarizing(context) {
+	const appName = context.packager.appInfo.productFilename;
 	const { electronPlatformName, appOutDir } = context;
+
 	if (electronPlatformName !== "darwin") {
+		console.log("• Skipping notarization (not macOS)");
 		return;
 	}
-	const appName = context.packager.appInfo.productFilename;
+
+	const appId = "com.croissantlabs.tacotac"; // Must match appId in config
+	const appPath = `${appOutDir}/${appName}.app`;
+	const { APPLE_ID, APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID } = process.env;
+
+	console.log(`• Notarizing ${appPath}`);
+
 	return await notarize({
-		appBundleId: process.env.APP_BUNDLE_ID, // e.g. com.croissantlabs.tacotac
-		appPath: `${appOutDir}/${appName}.app`,
-		appleApiKey: {
-			keyId: process.env.APPLE_API_KEY_ID, // Your API key ID
-			key: process.env.APPLE_API_KEY, // Path to your key file (.p8)
-			issuerId: process.env.APPLE_API_KEY_ISSUER, // Issuer ID
-		},
-		// teamId: process.env.APPLE_TEAM_ID,
+		tool: "notarytool",
+		appBundleId: appId,
+		appPath,
+		appleId: APPLE_ID,
+		appleIdPassword: APPLE_APP_SPECIFIC_PASSWORD,
+		teamId: APPLE_TEAM_ID,
 	});
 };

@@ -13,7 +13,18 @@
         "repo": "Tacotac"
       }
     ],
-    "appId": "com.croissantlabs.tacotac"
+    "appId": "com.croissantlabs.tacotac",
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "notarize": false
+    },
+    "dmg": {
+      "sign": false
+    },
+    "afterSign": "script/nota.js"
   },
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
