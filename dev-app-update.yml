@@ -1,3 +1,3 @@
-provider: generic
-url: https://example.com/auto-updates
+provider: github
+url: https://github.com/smcroissant/Tacotac/releases
 updaterCacheDirName: tacotac-updater

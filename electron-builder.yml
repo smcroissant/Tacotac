@@ -43,5 +43,3 @@ publish:
   provider: github
   owner: smcroissant
   repo: Tacotac
-  releaseType: draft
-  token: ${{ secrets.SECRET_GITHUB_ACTION }}
