@@ -40,5 +40,8 @@ appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: generic
-  url: https://example.com/auto-updates
+  provider: github
+  owner: smcroissant
+  repo: Tacotac
+  releaseType: draft
+  token: ${{ secrets.SECRET_GITHUB_ACTION }}
