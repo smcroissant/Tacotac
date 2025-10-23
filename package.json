@@ -5,27 +5,6 @@
   "main": "./out/main/index.js",
   "author": "smcroissant",
   "homepage": "https://electron-vite.org",
-  "build": {
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "smcroissant",
-        "repo": "Tacotac"
-      }
-    ],
-    "appId": "com.croissantlabs.tacotac",
-    "mac": {
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "./build/entitlements.mac.plist",
-      "entitlementsInherit": "./build/entitlements.mac.plist",
-      "notarize": false
-    },
-    "dmg": {
-      "sign": false
-    },
-    "afterSign": "script/nota.js"
-  },
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
