@@ -1,12 +1,19 @@
-import { resolve } from "node:path";
-import react from "@vitejs/plugin-react";
+import { resolve } from "path";
 import { defineConfig, externalizeDepsPlugin } from "electron-vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
 	main: {
+		build: {
+			outDir: "out/main",
+		},
 		plugins: [externalizeDepsPlugin()],
 	},
 	preload: {
+		build: {
+			outDir: "out/preload",
+		},
 		plugins: [externalizeDepsPlugin()],
 	},
 	renderer: {
@@ -15,6 +22,6 @@ export default defineConfig({
 				"@renderer": resolve("src/renderer/src"),
 			},
 		},
-		plugins: [react()],
+		plugins: [react(), tailwindcss()],
 	},
 });
