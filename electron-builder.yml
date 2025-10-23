@@ -21,7 +21,6 @@ nsis:
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   type: distribution
-  identity: "Developer ID Application: Sam Mamane (EQK9C6NL2W)"
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
