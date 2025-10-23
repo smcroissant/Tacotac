@@ -1,31 +1,56 @@
-name: Release and Publish macOS Electron App
-
-permissions:
-  contents: write
-  actions: read
+name: Build/release Electron app
 
 on:
   push:
     tags:
-      - 'v*'
+      - v*.*.*
 
 jobs:
-  build-and-publish:
-    runs-on: macos-latest
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - name: Checkout repository
+      - name: Check out Git repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 16
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build and publish Electron app (macOS)
-        run: npm run build:mac --publish=always
+      - name: build-linux
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run build:linux
+
+      - name: build-mac
+        if: matrix.os == 'macos-latest'
+        run: npm run build:mac
+
+      - name: build-win
+        if: matrix.os == 'windows-latest'
+        run: npm run build:win
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            dist/*.exe
+            dist/*.zip
+            dist/*.dmg
+            dist/*.AppImage
+            dist/*.snap
+            dist/*.deb
+            dist/*.rpm
+            dist/*.tar.gz
+            dist/*.yml
+            dist/*.blockmap
         env:
-          GH_TOKEN: ${{ secrets.SECRET_GITHUB_ACTION }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
