@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.croissantlabs.tacotac
 productName: Tacotac
 directories:
   buildResources: build
@@ -20,6 +20,8 @@ nsis:
   createDesktopShortcut: always
 mac:
   entitlementsInherit: build/entitlements.mac.plist
+  type: distribution
+  identity: "Developer ID Application: Sam Mamane (EQK9C6NL2W)"
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
