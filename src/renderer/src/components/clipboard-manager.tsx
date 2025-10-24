@@ -7,6 +7,7 @@ import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import type { ClipboardItem } from "@renderer/env";
 import { toast } from "sonner";
+import { TextItem } from "./text-item";
 
 export function ClipboardManager() {
 	const [clipboardItems, setClipboardItems] = useState<ClipboardItem[]>([]);
@@ -95,36 +96,7 @@ export function ClipboardManager() {
 									</div>
 								) : (
 									filteredItems.map((item) => (
-										<div
-											key={item.id}
-											className="group bg-secondary/80 border border-accent/30 rounded px-2 py-1 hover:border-accent hover:glow-cyan transition-all duration-300"
-										>
-											<div className="flex justify-between  gap-4">
-												<div className="flex-1 min-w-0">
-													{/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
-													{/** biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-													<div
-														className="text-sm font-mono text-foreground break-all leading-relaxed"
-														onClick={() => copyToClipboard(item.text)}
-													>
-														{item.text.length > 100
-															? `${item.text.substring(0, 100)}...`
-															: item.text}
-													</div>
-												</div>
-
-												<div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity py-2">
-													{/** biome-ignore lint/a11y/noStaticElementInteractions: <explanation> */}
-													{/** biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-													<div
-														onClick={() => deleteItem(item?.id || 0)}
-														className="text-primary border-primary hover:text-background hover:glow-magenta font-mono"
-													>
-														<Trash2 className="w-4 h-4" />
-													</div>
-												</div>
-											</div>
-										</div>
+										<TextItem key={item.id} item={item} onDelete={deleteItem} />
 									))
 								)}
 							</div>

@@ -92,6 +92,9 @@ function createWindow(): void {
 	mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
 	mainWindow.on("blur", () => {
+		if (process.env.NODE_ENV === "development") {
+			return;
+		}
 		mainWindow.hide();
 	});
 
@@ -109,7 +112,12 @@ function createWindow(): void {
 
 	tray.on("click", () => {
 		if (mainWindow.isVisible()) {
-			mainWindow.hide();
+			if (process.env.NODE_ENV === "development") {
+				mainWindow.show();
+			} else {
+				console.log("yooo");
+				mainWindow.hide();
+			}
 		} else {
 			const cursorPoint = screen.getCursorScreenPoint();
 			const display = screen.getDisplayNearestPoint(cursorPoint);
