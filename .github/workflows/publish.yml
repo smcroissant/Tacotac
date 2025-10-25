@@ -61,8 +61,19 @@ jobs:
         run: |
           echo "$CSC_CONTENT" | base64 --decode > certificate.p12
 
-      - name: Build and publish Electron app (macOS)
-        run: npm run build:mac -- --publish=always
+      - name: Build and publish Electron app (macOS Intel)
+        run: npm run build:mac -- --publish=always --x64
+        env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          CSC_LINK: ./certificate.p12
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
+
+      - name: Build and publish Electron app (macOS ARM)
+        run: npm run build:mac -- --publish=always --arm64
         env:
           CI: true
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
