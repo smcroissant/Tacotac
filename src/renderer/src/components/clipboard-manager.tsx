@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import type { ClipboardItem } from "@renderer/env";
 
-import { Copy, Trash2, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { TextItem } from "./text-item";
 import { Card } from "./ui/card";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
-import { Button } from "./ui/button";
-import type { ClipboardItem } from "@renderer/env";
-import { toast } from "sonner";
-import { TextItem } from "./text-item";
 
 export function ClipboardManager() {
 	const [clipboardItems, setClipboardItems] = useState<ClipboardItem[]>([]);
@@ -43,16 +42,6 @@ export function ClipboardManager() {
 	const filteredItems = clipboardItems.filter((item) =>
 		item.text.toLowerCase().includes(searchQuery.toLowerCase()),
 	);
-
-	const copyToClipboard = async (content: string) => {
-		try {
-			await navigator.clipboard.writeText(content);
-
-			toast("Item copied to clipboard.");
-		} catch (err) {
-			console.error("Failed to copy:", err);
-		}
-	};
 
 	const deleteItem = async (id: number) => {
 		try {

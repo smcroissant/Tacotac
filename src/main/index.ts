@@ -58,6 +58,7 @@ function createWindow(): void {
 		height: 670,
 		show: false,
 		frame: false,
+		backgroundColor: "#0a0a0f",
 		icon: icon,
 		// titleBarStyle: 'hidden',
 		autoHideMenuBar: true,
