@@ -36,9 +36,12 @@ jobs:
           git tag $TAG
           git push origin $TAG
 
-  build-and-publish-arm:
+  build-and-publish:
     needs: auto-tag
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [macos-latest, macos-13]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -54,50 +57,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Décode le certificat base64
       - name: Prepare certificate
         env:
           CSC_CONTENT: ${{ secrets.MAC_CERTIFICATE }}
         run: |
           echo "$CSC_CONTENT" | base64 --decode > certificate.p12
 
-      - name: Build and publish Electron app (macOS)
-        run: npm run build:mac -- --publish=always
-        env:
-          CI: true
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          CSC_LINK: ./certificate.p12
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
-
-  build-and-publish-intel:
-    needs: auto-tag
-    runs-on: macos-13
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: main
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      # Décode le certificat base64
-      - name: Prepare certificate
-        env:
-          CSC_CONTENT: ${{ secrets.MAC_CERTIFICATE }}
-        run: |
-          echo "$CSC_CONTENT" | base64 --decode > certificate.p12
-
-      - name: Build and publish Electron app (macOS)
+      - name: Build and publish Electron app
         run: npm run build:mac -- --publish=always
         env:
           CI: true
